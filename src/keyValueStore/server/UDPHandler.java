@@ -1,14 +1,16 @@
 package keyValueStore.server;
 
 import java.net.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UDPHandler {
-    private KeyValueStore store;
+    private Map<String, String> store;
     private DatagramSocket socket;
 
     public UDPHandler(int port) throws SocketException {
         this.socket = new DatagramSocket(port);
-        this.store = new KeyValueStore();
+        this.store = new HashMap<>();
     }
 
     public void start() {
@@ -41,7 +43,7 @@ public class UDPHandler {
             case "GET":
                 return store.get(parts[1]);
             case "DELETE":
-                return store.delete(parts[1]);
+                return store.remove(parts[1]);
             default:
                 return "ERROR: Invalid command";
         }

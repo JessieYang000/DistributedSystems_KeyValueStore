@@ -2,14 +2,16 @@ package keyValueStore.server;
 
 import java.io.*;
 import java.net.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TCPHandler {
-    private KeyValueStore store;
+    private Map<String, String> store;
     private ServerSocket serverSocket;
 
     public TCPHandler(int port) throws IOException {
         this.serverSocket = new ServerSocket(port);
-        this.store = new KeyValueStore();
+        this.store = new HashMap<>();
     }
 
     public void start() {
@@ -38,7 +40,7 @@ public class TCPHandler {
             case "GET":
                 return store.get(parts[1]);
             case "DELETE":
-                return store.delete(parts[1]);
+                return store.remove(parts[1]);
             default:
                 return "ERROR: Invalid command";
         }
